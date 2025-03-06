@@ -83,7 +83,17 @@ run_noir_proof_ultra_starknet() {
     cd ../
 }
 
+run_noir_proof_ultra_honk_recursive_flow() {
+    cd hello
+    local suffix="_ultra_honk_recursive_flow"
 
+    $BB_PATH prove_ultra_honk -b target/hello.json -w target/witness.gz -o target/proof -h 1 --recursive 
+    $BB_PATH proof_as_fields_honk -p target/proof -o target/proof_fields -h 1 --recursive
+    $BB_PATH write_vk_ultra_honk -h 1 -b target/hello.json -o target/vk --recursive
+    $BB_PATH vk_as_fields_ultra_honk -k target/vk -o target/vk_fields -h 1
+    $BB_PATH verify_ultra_honk -p target/proof -v target/vk.bin -h 1 --recursive
+    
+}
 
 
 echo $'\n basic'
@@ -101,6 +111,10 @@ run_noir_proof_ultra_keccak
 # echo $'\n ultra starknet honk'
 # reset
 # run_noir_proof_ultra_starknet
+
+echo $'\n ultra honk recursive flow'
+# reset
+run_noir_proof_ultra_honk_recursive_flow
 
 
 echo $'\n'

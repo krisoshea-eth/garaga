@@ -1,5 +1,5 @@
 [package]
-name = "hello"
+name = "recursion"
 type = "bin"
 authors = [""]
 
